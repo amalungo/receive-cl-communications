@@ -58,11 +58,9 @@
     >
       <!-- TODO: Update the heading and text content. -->
       <section>
-        <gcds-heading tag="h1">Basic page</gcds-heading>
+        <gcds-heading tag="h1">Receive communication from CanadaLogin</gcds-heading>
         <gcds-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
-          egestas maecenas pharetra convallis posuere morbi leo urna.
+          <strong>If you'd like to receive updates, sign up for our GC Sign in mailing list.</strong>
         </gcds-text>
       </section>
 
@@ -84,31 +82,73 @@
 
       <!-- TODO: Confirm the id matches the "href" id in the corresponding "On this page" link. -->
       <section id="section-1">
-        <gcds-heading tag="h2">Section 1</gcds-heading>
+        <gcds-heading tag="h2">Have a question for the CanadaLogin team?</gcds-heading>
         <gcds-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
-          egestas maecenas pharetra convallis posuere morbi leo urna.
+          Go to the <gcds-link href="https://sign-in.canada.ca/en/partners/contact/">CanadaLogin contact form</gcds-link>.
+        </gcds-text>
+        <gcds-text>
+          Learn about the personal information we collect and how we're handling it by visiting our <gcds-link href="https://sign-in.canada.ca/en/partners/privacy/">privacy page</gcds-link>.
         </gcds-text>
 
-        <gcds-heading tag="h3">Subsection heading</gcds-heading>
-        <gcds-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
-          egestas maecenas pharetra convallis posuere morbi leo urna.
-        </gcds-text>
+        <form id="comm-form">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <br>
+          <label>
+            <input type="checkbox" id="consent" name="consent">
+            I consent to receive communications from CanadaLogin.
+          </label>
+          <br>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="msg"></p>
+        <script>
+          const ENDPOINT = "https://2jugu7ddyo2ebdnzg7ec7tm6bq0waeor.lambda-url.us-east-1.on.aws/"; // replace
 
-        <gcds-heading tag="h3">Subsection heading</gcds-heading>
-        <gcds-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
-          egestas maecenas pharetra convallis posuere morbi leo urna.
-        </gcds-text>
+          const form = document.getElementById("comm-form");
+          const msg  = document.getElementById("msg");
+
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            msg.textContent = "Submitting…";
+            const email = document.getElementById("email").value.trim();
+            const consent = document.getElementById("consent").checked;
+
+            // Optional: enforce consent == true
+            // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
+
+            try {
+              const res = await fetch(ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, consent })
+              });
+
+              const text = await res.text();
+              let data;
+              try { data = JSON.parse(text); } catch { data = { error: text }; }
+
+              if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+
+              if (data.alreadySubscribed) {
+                msg.textContent = "You're already subscribed.";
+              } else if (data.created) {
+                msg.textContent = "Subscription successful! Check your inbox for updates.";
+              } else {
+                msg.textContent = "Unexpected response from server.";
+              }
+            } catch (err) {
+              console.error(err);
+              msg.textContent = `Subscription failed: ${err.message}`;
+            }
+          });
+        </script>
+        
       </section>
 
       <!-- TODO: Confirm the id matches the "href" id in the corresponding "On this page" link. -->
       <section id="section-2">
-        <gcds-heading tag="h2">Section 2</gcds-heading>
+        <gcds-heading tag="h2">Form section</gcds-heading>
         <gcds-text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
