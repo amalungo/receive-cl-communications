@@ -18,5 +18,61 @@
         <li><a href="https://www.linkedin.com/company/CanadaLogin">LinkedIn</a></li>
     </ul>
     
+    <hr>
+    <form id="comm-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <label>
+        <input type="checkbox" id="consent" name="consent">
+        I consent to receive communications from CanadaLogin.
+      </label>
+      <br>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p id="msg"></p>
+    <script>
+  const ENDPOINT = "https://2jugu7ddyo2ebdnzg7ec7tm6bq0waeor.lambda-url.us-east-1.on.aws/"; // replace
+
+  const form = document.getElementById("comm-form");
+  const msg  = document.getElementById("msg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.textContent = "Submitting…";
+    const email = document.getElementById("email").value.trim();
+    const consent = document.getElementById("consent").checked;
+
+    // Optional: enforce consent == true
+    // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, consent })
+      });
+
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = { error: text }; }
+
+      if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+
+      if (data.alreadySubscribed) {
+        msg.textContent = "You're already subscribed.";
+      } else if (data.created) {
+        msg.textContent = `Thanks! Subscription received for ${data.email}.`;
+        form.reset();
+      } else {
+        msg.textContent = "Request processed.";
+      }
+    } catch (err) {
+      console.error(err);
+      msg.textContent = "Sorry, something went wrong. Please try again.";
+    }
+  });
+</script>
+
 </body>
 </html>
