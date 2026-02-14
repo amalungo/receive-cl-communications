@@ -98,7 +98,7 @@
             id="consent"
             legend="Legend"
             options='[
-              { "label": "Contact me for usability research", "id": "consent", "value": true}
+              { "label": "Contact me for usability research", "id": "consent", "value": "true"}
             ]'
           >
           </gcds-checkboxes>
@@ -123,7 +123,10 @@
             e.preventDefault();
             msg.textContent = "Submitting…";
             const email = document.getElementById("email").value.trim();
-            const consent = document.getElementById("consent").checked;
+            // const consent = document.getElementById("consent").checked;
+            if (document.getElementById("consent").checked) {
+              const consent = true;
+            }
 
             // Optional: enforce consent == true
             // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
