@@ -56,7 +56,6 @@
       layout="page"
       tag="main"
     >
-      <!-- TODO: Update the heading and text content. -->
       <section>
         <gcds-heading tag="h1">Receive communication from CanadaLogin</gcds-heading>
         <gcds-text>
@@ -64,7 +63,6 @@
         </gcds-text>
       </section>
 
-      <!-- TODO: Confirm the id matches the "href" id in the corresponding "On this page" link. -->
       <section id="section-1">
         <gcds-heading tag="h2">Have a question for the CanadaLogin team?</gcds-heading>
         <gcds-text>
@@ -75,9 +73,7 @@
         </gcds-text>
 
         <form id="comm-form">
-          <!-- <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-          <br> -->
+
             <gcds-input
             id="email"
             input-id="email"
@@ -88,11 +84,7 @@
             required
             >
             </gcds-input>
-        <br>
-          <!-- <label>
-            <input type="checkbox" id="consent" name="consent">
-            I consent to receive communications from CanadaLogin.
-          </label> -->
+
           <gcds-checkboxes
             name="consent"
             id="consent"
@@ -102,16 +94,19 @@
             ]'
           >
           </gcds-checkboxes>
-          <br>
+
           <gcds-button type="submit">
             Submit
           </gcds-button>
+
         </form>
+
         <p id="msg"></p>
-          <gcds-icon label="Vanilla" name="info-circle" margin-left="75"></gcds-icon>
+
+          <!-- <gcds-icon label="Vanilla" name="info-circle" margin-left="75"></gcds-icon>
           <gcds-link href="./vanilla.html">
             Vanilla
-          </gcds-link>
+          </gcds-link> -->
           
         <script>
           const ENDPOINT = "https://2jugu7ddyo2ebdnzg7ec7tm6bq0waeor.lambda-url.us-east-1.on.aws/"; // replace
@@ -121,8 +116,7 @@
 
           form.addEventListener("submit", async (e) => {
             e.preventDefault();
-            msg.textContent = "Submitting…";
-            const email = document.getElementById("email").value.trim();
+            msg.textContent = "Submitting…";            
             
             let temp;
 
@@ -132,11 +126,8 @@
               temp = false;
             }
 
-            // const consent = document.getElementById("consent").checked;
             const consent = temp;
-            /* if (document.getElementById("consent").checked) {
-              const consent = true;
-            } */
+            const email = document.getElementById("email").value.trim();
 
             // Optional: enforce consent == true
             // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
@@ -170,18 +161,7 @@
         
       </section>
 
-      <!-- TODO: Confirm the id matches the "href" id in the corresponding "On this page" link.
-      <section id="section-2">
-        <gcds-heading tag="h2">Form section</gcds-heading>
-        <gcds-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Turp is
-          egestas maecenas pharetra convallis posuere morbi leo urna.
-        </gcds-text>
-      </section> -->
-
-      <!-- TODO: Update the date to reflect the page's most recent change. -->
-      <gcds-date-modified>2024-08-22</gcds-date-modified>
+      <gcds-date-modified>2026-02-12</gcds-date-modified>
     </gcds-container>
 
     <!---------- Footer ---------->
