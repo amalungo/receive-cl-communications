@@ -89,20 +89,28 @@
             >
             </gcds-input>
         <br>
-          <label>
+          <!-- <label>
             <input type="checkbox" id="consent" name="consent">
             I consent to receive communications from CanadaLogin.
-          </label>
+          </label> -->
+          <gcds-checkboxes
+            name="consent"
+            id="consent"
+            legend="Legend"
+            options='[
+              { "label": "Contact me for usability research", "id": "consent", "value": "consent"}
+            ]'
+          >
+          </gcds-checkboxes>
           <br>
           <gcds-button type="submit">
-            Subscribe
+            Submit
           </gcds-button>
-
         </form>
         <p id="msg"></p>
           <gcds-icon label="Vanilla" name="info-circle" margin-left="75"></gcds-icon>
           <gcds-link href="./vanilla.html">
-            Try vanilla
+            Vanilla
           </gcds-link>
           
         <script>
