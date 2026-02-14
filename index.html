@@ -123,10 +123,20 @@
             e.preventDefault();
             msg.textContent = "Submitting…";
             const email = document.getElementById("email").value.trim();
-            // const consent = document.getElementById("consent").checked;
+            
+            let temp;
+
             if (document.getElementById("consent").checked) {
-              const consent = true;
+              temp = true;
+            } else {
+              temp = false;
             }
+
+            // const consent = document.getElementById("consent").checked;
+            const consent = temp;
+            /* if (document.getElementById("consent").checked) {
+              const consent = true;
+            } */
 
             // Optional: enforce consent == true
             // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
