@@ -118,16 +118,18 @@
             e.preventDefault();
             msg.textContent = "Submitting…";            
             
+            /* 
             let temp;
 
             if (document.getElementById("consent").checked) {
               temp = true;
             } else {
               temp = false;
-            }
+            } */
 
-            const consent = temp;
+            // const consent = temp;
             const email = document.getElementById("email").value.trim();
+            const consent = (document.getElementById("consent").checked) ? true : false;
 
             // Optional: enforce consent == true
             // if (!consent) { msg.textContent = "You must consent to subscribe."; return; }
